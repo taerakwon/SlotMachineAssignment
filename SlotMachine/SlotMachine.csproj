@@ -59,7 +59,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\images\bell.png" />
+    <Content Include="assets\images\berry.png" />
+    <Content Include="assets\images\betmaxbutton.png" />
+    <Content Include="assets\images\betonebutton.png" />
+    <Content Include="assets\images\bettenbutton.png" />
+    <Content Include="assets\images\blank.png" />
+    <Content Include="assets\images\cherry.png" />
+    <Content Include="assets\images\lemon.png" />
+    <Content Include="assets\images\orange.png" />
+    <Content Include="assets\images\resetbutton.png" />
+    <Content Include="assets\images\slotmachine.png" />
+    <Content Include="assets\images\slotMachineAtlas.png" />
+    <Content Include="assets\images\slotmachinebg.png" />
+    <Content Include="assets\images\spinbutton.png" />
     <Content Include="packages.config" />
+    <Content Include="assets\fonts\digital-7.ttf" />
+    <Content Include="assets\images\slotMachineAtlas.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -68,8 +84,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\audio\clicked.wav" />
-    <Content Include="assets\images\pinkButton.png" />
     <Content Include="css\main.css" />
     <Content Include="index.html" />
     <Content Include="Scripts\lib\easeljs-0.8.0.min.js" />
@@ -83,7 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="assets\fonts\" />
+    <Folder Include="assets\audio\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\game.ts" />
