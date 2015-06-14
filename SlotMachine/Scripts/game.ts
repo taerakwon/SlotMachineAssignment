@@ -74,8 +74,7 @@ var playerBetLabel: objects.Label;
 var spinResultLabel: objects.Label;
 var jackpotLabel: objects.Label;
 
-
-var reelResult;
+var betLine = ["blank.png","blank.png","blank.png"];
 var reel1Sprite: createjs.Bitmap;
 var reel2Sprite: createjs.Bitmap;
 var reel3Sprite: createjs.Bitmap;
@@ -172,8 +171,8 @@ function spinButtonClicked(event: createjs.MouseEvent)
     else if (playerBet > playerCredit) {
         alert("You don't have enough credit to place that bet");
     }
-    else if (playerBet <= playerCredit) {
-        reelResult = Reels();
+    else if (playerBet <= playerCredit && playerBet != 0) {
+        Reels();
         determineWinnings();
     }
 
@@ -225,46 +224,47 @@ function checkRange(value, lowerBounds, upperBounds) {
 /* When this function is called it determines the betLine results.
 e.g. Bar - Orange - Banana */
 function Reels() {
-    var betLine = [" ", " ", " "];
+    betLine = [" ", " ", " "];
     var outCome = [0, 0, 0];
 
     for (var spin = 0; spin < 3; spin++) {
         outCome[spin] = Math.floor((Math.random() * 65) + 1);
         switch (outCome[spin]) {
             case checkRange(outCome[spin], 1, 27):  // 41.5% probability
-                betLine[spin] = "blank";
+                betLine[spin] = "blank.png";
                 blanks++;
                 break;
             case checkRange(outCome[spin], 28, 37): // 15.4% probability
-                betLine[spin] = "lemon";
+                betLine[spin] = "lemon.png";
                 lemons++;
                 break;
             case checkRange(outCome[spin], 38, 46): // 13.8% probability
-                betLine[spin] = "berry";
+                betLine[spin] = "berry.png";
                 blueberries++;
                 break;
             case checkRange(outCome[spin], 47, 54): // 12.3% probability
-                betLine[spin] = "orange";
+                betLine[spin] = "orange.png";
                 oranges++;
                 break;
             case checkRange(outCome[spin], 55, 59): //  7.7% probability
-                betLine[spin] = "cherry";
+                betLine[spin] = "cherry.png";
                 cherries++;
                 break;
             case checkRange(outCome[spin], 60, 62): //  4.6% probability
-                betLine[spin] = "bell";
+                betLine[spin] = "bell.png";
                 bells++;
                 break;
             case checkRange(outCome[spin], 63, 64): //  3.1% probability
-                betLine[spin] = "seven";
+                betLine[spin] = "seven.png";
                 sevens++;
                 break;
             case checkRange(outCome[spin], 65, 65): //  1.5% probability
-                betLine[spin] = "cheese";
+                betLine[spin] = "cheese.png";
                 cheeses++;
                 break;
         }
     }
+    main();
     return betLine;
 }
 
@@ -395,26 +395,26 @@ function main()
     stage.addChild(spinResultLabel);
 
     // Add jackpot Label
-    jackpotLabel = new objects.Label(jackpot, 50, 50, false);
+    jackpotLabel = new objects.Label(jackpot, 200, 70, false);
     jackpotLabel.color = "RED";
     jackpotLabel.textAlign = "right";
     stage.addChild(jackpotLabel);
 
     // Add reel1Sprite Bitmap
-    reel1Sprite = new createjs.Bitmap(reelResult[0]);
-    reel1Sprite.x = 50;
-    reel1Sprite.y = 150;
+    reel1Sprite = new createjs.Bitmap("assets/images/"+betLine[0]);
+    reel1Sprite.x = 54;
+    reel1Sprite.y = 174;
     stage.addChild(reel1Sprite);
 
     // Add reel2Sprite Bitmap
-    reel2Sprite = new createjs.Bitmap(reelResult[1]);
-    reel2Sprite.x = 100;
-    reel2Sprite.y = 150;
+    reel2Sprite = new createjs.Bitmap("assets/images/"+betLine[1]);
+    reel2Sprite.x = 130;
+    reel2Sprite.y = 174;
     stage.addChild(reel2Sprite);
 
     // Add reel3Sprite Bitmap
-    reel3Sprite = new createjs.Bitmap(reelResult[1]);
-    reel3Sprite.x = 150;
-    reel3Sprite.y = 150;
+    reel3Sprite = new createjs.Bitmap("assets/images/"+betLine[2]);
+    reel3Sprite.x = 206;
+    reel3Sprite.y = 174;
     stage.addChild(reel3Sprite);
 }
