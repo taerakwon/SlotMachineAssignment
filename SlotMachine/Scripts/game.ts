@@ -60,7 +60,6 @@ var slotMachineAtlas = {
 
 }
 
-
 // Game Variables
 var background: createjs.Bitmap;
 var reset: createjs.Bitmap;
@@ -73,10 +72,36 @@ var betOneButton: objects.Button;
 var playerCreditsLabel: objects.Label;
 var playerBetLabel: objects.Label;
 var spinResultLabel: objects.Label;
+var jackpotLabel: objects.Label;
+
+
+var reelResult;
+var reel1Sprite: createjs.Bitmap;
+var reel2Sprite: createjs.Bitmap;
+var reel3Sprite: createjs.Bitmap;
+
+var jackpot;
 var playerCredit;
 var playerBet;
 var spinResult;
+var bells = 0;
+var cheeses = 0;
+var cherries = 0;
+var blueberries = 0;
+var lemons = 0;
+var oranges = 0;
+var sevens = 0;
+var blanks = 0;
 
+
+
+
+
+
+
+
+// Default Jackpot Amount
+jackpot = 5000;
 
 // Player Credit Default Amount
 playerCredit = 1000;
@@ -138,32 +163,173 @@ function setupStats() {
 // Click Event for Spin Button
 function spinButtonClicked(event: createjs.MouseEvent)
 {
+    if (playerCredit == 0) {
+        if (confirm("You don't have any more credit!\nReplay?"));
+        {
+            resetAll();
+        }
+    }
+    else if (playerBet > playerCredit) {
+        alert("You don't have enough credit to place that bet");
+    }
+    else if (playerBet <= playerCredit) {
+        reelResult = Reels();
+        determineWinnings();
+    }
 
+}
+
+
+// Reset Function
+
+function resetAll() {
+    playerBet = 0;
+    playerCredit = 1000;
+    main();
 }
 
 // Click Event for Bet One Button
 function betOneButtonClicked(event: createjs.MouseEvent)
 {
     playerBet = 1;
+    main();
 }
 
 // Click Event for Bet Ten Button
 function betTenButtonClicked(event: createjs.MouseEvent) {
     playerBet = 10;
+    main();
 }
 
 // Click Event for Bet Max Button
 function betMaxButtonClicked(event: createjs.MouseEvent) {
     playerBet = playerCredit;
+    main();
 }
 
 // Click Event for Reset Button
 function resetButtonClicked(event: createjs.MouseEvent) {
-    playerBet = 0;
-    playerCredit = 1000;
+    resetAll();
 }
 
+/* Utility function to check if a value falls within a range of bounds */
+function checkRange(value, lowerBounds, upperBounds) {
+    if (value >= lowerBounds && value <= upperBounds) {
+        return value;
+    }
+    else {
+        return !value;
+    }
+}
 
+/* When this function is called it determines the betLine results.
+e.g. Bar - Orange - Banana */
+function Reels() {
+    var betLine = [" ", " ", " "];
+    var outCome = [0, 0, 0];
+
+    for (var spin = 0; spin < 3; spin++) {
+        outCome[spin] = Math.floor((Math.random() * 65) + 1);
+        switch (outCome[spin]) {
+            case checkRange(outCome[spin], 1, 27):  // 41.5% probability
+                betLine[spin] = "blank";
+                blanks++;
+                break;
+            case checkRange(outCome[spin], 28, 37): // 15.4% probability
+                betLine[spin] = "lemon";
+                lemons++;
+                break;
+            case checkRange(outCome[spin], 38, 46): // 13.8% probability
+                betLine[spin] = "berry";
+                blueberries++;
+                break;
+            case checkRange(outCome[spin], 47, 54): // 12.3% probability
+                betLine[spin] = "orange";
+                oranges++;
+                break;
+            case checkRange(outCome[spin], 55, 59): //  7.7% probability
+                betLine[spin] = "cherry";
+                cherries++;
+                break;
+            case checkRange(outCome[spin], 60, 62): //  4.6% probability
+                betLine[spin] = "bell";
+                bells++;
+                break;
+            case checkRange(outCome[spin], 63, 64): //  3.1% probability
+                betLine[spin] = "seven";
+                sevens++;
+                break;
+            case checkRange(outCome[spin], 65, 65): //  1.5% probability
+                betLine[spin] = "cheese";
+                cheeses++;
+                break;
+        }
+    }
+    return betLine;
+}
+
+/* This function calculates the player's winnings, if any */
+function determineWinnings() {
+    if (blanks == 0) {
+        if (lemons == 3) {
+            spinResult = playerBet * 10;
+        }
+        else if (blueberries == 3) {
+            spinResult = playerBet * 20;
+        }
+        else if (oranges == 3) {
+            spinResult = playerBet * 30;
+        }
+        else if (cherries == 3) {
+            spinResult = playerBet * 40;
+        }
+        else if (bells == 3) {
+            spinResult = playerBet * 50;
+        }
+        else if (sevens == 3) {
+            spinResult = playerBet * 75;
+        }
+        else if (cheeses == 3) {
+            spinResult = playerBet * 100;
+        }
+        else if (lemons == 2) {
+            spinResult = playerBet * 2;
+        }
+        else if (blueberries == 2) {
+            spinResult = playerBet * 2;
+        }
+        else if (oranges == 2) {
+            spinResult = playerBet * 3;
+        }
+        else if (cherries == 2) {
+            spinResult = playerBet * 4;
+        }
+        else if (bells == 2) {
+            spinResult = playerBet * 5;
+        }
+        else if (sevens == 2) {
+            spinResult = playerBet * 10;
+        }
+        else if (cheeses == 2) {
+            spinResult = playerBet * 20;
+        }
+        else if (cheeses == 1) {
+            spinResult = playerBet * 5;
+        }
+        else {
+            spinResult = playerBet * 1;
+        }
+        playerCredit += spinResult;
+    }
+    else
+    {
+        // If there is even one blank on any reel
+        spinResult == 0; // set the spin result to 0 
+        jackpot += playerBet; // Add what player bet to the jackpot pool
+        
+    }
+
+}
 // Callback function that creates our Main Game Loop - refreshed 60 fps
 function gameLoop() {
     stats.begin(); // Begin measuring
@@ -193,6 +359,7 @@ function main()
     // Add resetButton sprite
     resetButton = new objects.Button("resetbutton", 191, 336, false);
     stage.addChild(resetButton);
+    resetButton.on("click", resetButtonClicked, this);
 
     // Add betMaxButton sprite
     betMaxButton = new objects.Button("betmaxbutton", 136, 336, false);
@@ -210,17 +377,44 @@ function main()
     betOneButton.on("click", betOneButtonClicked, this);
 
     // Add playerCredits Label
-    playerCreditsLabel = new objects.Label(playerCredit, 55, 309, false);
+    playerCreditsLabel = new objects.Label(playerCredit, 98, 309, false);
     playerCreditsLabel.color = "RED";
+    playerCreditsLabel.textAlign = "right";
     stage.addChild(playerCreditsLabel);
 
     // Add playerBet Label
-    playerBetLabel = new objects.Label(playerBet, 184, 309, false);
+    playerBetLabel = new objects.Label(playerBet, 195, 309, false);
     playerBetLabel.color = "RED";
+    playerBetLabel.textAlign = "right";
     stage.addChild(playerBetLabel);
 
     // Add spinResult Label
-    spinResultLabel = new objects.Label(spinResult, 282, 309, false);
+    spinResultLabel = new objects.Label(spinResult, 292, 309, false);
     spinResultLabel.color = "RED";
+    spinResultLabel.textAlign = "right";
     stage.addChild(spinResultLabel);
+
+    // Add jackpot Label
+    jackpotLabel = new objects.Label(jackpot, 50, 50, false);
+    jackpotLabel.color = "RED";
+    jackpotLabel.textAlign = "right";
+    stage.addChild(jackpotLabel);
+
+    // Add reel1Sprite Bitmap
+    reel1Sprite = new createjs.Bitmap(reelResult[0]);
+    reel1Sprite.x = 50;
+    reel1Sprite.y = 150;
+    stage.addChild(reel1Sprite);
+
+    // Add reel2Sprite Bitmap
+    reel2Sprite = new createjs.Bitmap(reelResult[1]);
+    reel2Sprite.x = 100;
+    reel2Sprite.y = 150;
+    stage.addChild(reel2Sprite);
+
+    // Add reel3Sprite Bitmap
+    reel3Sprite = new createjs.Bitmap(reelResult[1]);
+    reel3Sprite.x = 150;
+    reel3Sprite.y = 150;
+    stage.addChild(reel3Sprite);
 }
