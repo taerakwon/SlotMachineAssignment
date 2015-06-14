@@ -1,12 +1,11 @@
 ﻿/// <reference path="../scripts/typings/easeljs/easeljs.d.ts" />
 
-
 module objects {
     // BUTTON CLASS +++++++++++++++++++++++++++++
     export class Button extends createjs.Sprite {
         // CONSTRUCTOR +++++++++++++++++++++++++++
         constructor(imageString: string, x: number, y: number, centered: boolean) {
-            super(textureAtlas, imageString);
+            super(spriteSheet, imageString); // spriteSheet goes into imageString
 
             if (centered) {
                 this.regX = this.getBounds().width * 0.5;

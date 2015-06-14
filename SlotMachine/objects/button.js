@@ -12,7 +12,7 @@ var objects;
         __extends(Button, _super);
         // CONSTRUCTOR +++++++++++++++++++++++++++
         function Button(imageString, x, y, centered) {
-            _super.call(this, textureAtlas, imageString);
+            _super.call(this, spriteSheet, imageString); // spriteSheet goes into imageString
             if (centered) {
                 this.regX = this.getBounds().width * 0.5;
                 this.regY = this.getBounds().height * 0.5;

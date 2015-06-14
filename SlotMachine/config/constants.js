@@ -1,11 +1,11 @@
 var config;
 (function (config) {
     // FONT CONSTANTS
-    config.FONT_LABEL = "12px";
+    config.FONT_LABEL = "10px";
     config.FONT_SMALL = "20px";
     config.FONT_MEDIUM = "40px";
     config.FONT_LARGE = "60px";
-    config.FONT_FAMILY = "assets/fonts/digital-7.ttf";
+    config.FONT_FAMILY = "Consolas";
     // COLOUR CONSTANTS
     config.BLACK = "#000000";
     config.WHITE = "#FFFFFF";

@@ -1,6 +1,6 @@
 ﻿module config {
     // FONT CONSTANTS
-    export var FONT_LABEL: string = "12px";
+    export var FONT_LABEL: string = "10px";
     export var FONT_SMALL: string = "20px";
     export var FONT_MEDIUM: string = "40px";
     export var FONT_LARGE: string = "60px";
