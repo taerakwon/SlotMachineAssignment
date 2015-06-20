@@ -7,6 +7,8 @@
 /// <reference path="../objects/label.ts" />
 /// <reference path="../objects/button.ts" />
 
+
+
 // Game Framework Variables
 var canvas = document.getElementById("canvas");
 canvas.style.position = "absolute";
@@ -20,6 +22,9 @@ var assets: createjs.LoadQueue;
 var manifest = [
     { id: "background", src: "assets/images/slotmachinebg.png" }
 ];
+
+// Preloading Sound
+createjs.Sound.registerSound({ id: "buttonClick", src: "assets/audio/buttonClick.wav" });
 
 // Load slotMachineAtlas
 // slotMachineAtlas has sprite objects in arrays
@@ -86,7 +91,6 @@ var reel1Sprite: createjs.Bitmap;
 var reel2Sprite: createjs.Bitmap;
 var reel3Sprite: createjs.Bitmap;
 
-
 // Game Variables
 var betLine = ["blank.png", "blank.png", "blank.png"];
 var jackpot;
@@ -123,6 +127,7 @@ function calcPlayerCredit()
 
 // Preloader Function
 function preload() {
+
     assets = new createjs.LoadQueue();
     assets.installPlugin(createjs.Sound);
     // event listener triggers when assets are completely loaded
@@ -133,17 +138,19 @@ function preload() {
     spriteSheet = new createjs.SpriteSheet(slotMachineAtlas);
 
     //Setup statistics object
-    setupStats();
+    setupStats();    
+       
 }
 
 // Callback function that initializes game objects
 function init() {
+    
     stage = new createjs.Stage(canvas); // reference to the stage
     stage.enableMouseOver(20);
     createjs.Ticker.setFPS(60); // framerate 60 fps for the game
     // event listener triggers 60 times every second
     createjs.Ticker.on("tick", gameLoop); 
-
+    
     // calling main game function
     main();
 }
@@ -165,6 +172,7 @@ function setupStats() {
 // Click Event for Spin Button
 function spinButtonClicked(event: createjs.MouseEvent)
 {
+    createjs.Sound.play("buttonClick");
     if (playerCredit == 0) {
         if (confirm("You don't have any more credit!\nReplay?"));
         {
@@ -185,6 +193,8 @@ function spinButtonClicked(event: createjs.MouseEvent)
 // Reset Function
 
 function resetAll() {
+    betLine = ["blank.png", "blank.png", "blank.png"];
+    jackpot = 5000;
     playerBet = 0;
     playerCredit = 1000;
     main();
@@ -193,24 +203,28 @@ function resetAll() {
 // Click Event for Bet One Button
 function betOneButtonClicked(event: createjs.MouseEvent)
 {
+    createjs.Sound.play("buttonClick");
     playerBet = 1;
     main();
 }
 
 // Click Event for Bet Ten Button
 function betTenButtonClicked(event: createjs.MouseEvent) {
+    createjs.Sound.play("buttonClick");
     playerBet = 10;
     main();
 }
 
 // Click Event for Bet Max Button
 function betMaxButtonClicked(event: createjs.MouseEvent) {
+    createjs.Sound.play("buttonClick");
     playerBet = playerCredit;
     main();
 }
 
 // Click Event for Reset Button
 function resetButtonClicked(event: createjs.MouseEvent) {
+    createjs.Sound.play("buttonClick");
     resetAll();
 }
 
@@ -362,7 +376,7 @@ function pinkButtonClicked(event: createjs.MouseEvent) {
 
 // Our Main Game Function
 function main()
-{
+{    
     // Adding Slot Machine Graphics
     background = new createjs.Bitmap(assets.getResult("background"));
     stage.addChild(background); 
@@ -432,5 +446,6 @@ function main()
     reel3Sprite = new createjs.Bitmap("assets/images/"+betLine[2]);
     reel3Sprite.x = 206;
     reel3Sprite.y = 174;
-    stage.addChild(reel3Sprite);
+    stage.addChild(reel3Sprite);    
 }
+
