@@ -5,7 +5,7 @@ var config;
     config.FONT_SMALL = "20px";
     config.FONT_MEDIUM = "40px";
     config.FONT_LARGE = "60px";
-    config.FONT_FAMILY = "Consolas";
+    config.FONT_FAMILY = "digital-7";
     // COLOUR CONSTANTS
     config.BLACK = "#000000";
     config.WHITE = "#FFFFFF";

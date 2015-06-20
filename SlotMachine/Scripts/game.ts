@@ -9,13 +9,16 @@
 
 // Game Framework Variables
 var canvas = document.getElementById("canvas");
+canvas.style.position = "absolute";
+canvas.style.left = "0px";
+canvas.style.top = "0px";
+canvas.style.border = "none";
 var stage: createjs.Stage;
 var stats: Stats;
 
 var assets: createjs.LoadQueue;
 var manifest = [
-    { id: "background", src: "assets/images/slotmachinebg.png" },
-    { id: "reset", src: "assets/images/resetbutton.png" }
+    { id: "background", src: "assets/images/slotmachinebg.png" }
 ];
 
 // Load slotMachineAtlas
@@ -60,8 +63,10 @@ var slotMachineAtlas = {
 
 }
 
-// Game Variables
+// Slot Machine Background 
 var background: createjs.Bitmap;
+
+// Slot Machine Buttons
 var reset: createjs.Bitmap;
 var spriteSheet: createjs.SpriteSheet;
 var spinButton: objects.Button;
@@ -69,16 +74,21 @@ var resetButton: objects.Button;
 var betMaxButton: objects.Button;
 var betTenButton: objects.Button;
 var betOneButton: objects.Button;
+
+// Slot Machine Labels
 var playerCreditsLabel: objects.Label;
 var playerBetLabel: objects.Label;
 var spinResultLabel: objects.Label;
-var jackpotLabel: objects.Label;
+var jackpotLabel: createjs.Text;
 
-var betLine = ["blank.png","blank.png","blank.png"];
+// Reels
 var reel1Sprite: createjs.Bitmap;
 var reel2Sprite: createjs.Bitmap;
 var reel3Sprite: createjs.Bitmap;
 
+
+// Game Variables
+var betLine = ["blank.png", "blank.png", "blank.png"];
 var jackpot;
 var playerCredit;
 var playerBet;
@@ -91,13 +101,6 @@ var lemons = 0;
 var oranges = 0;
 var sevens = 0;
 var blanks = 0;
-
-
-
-
-
-
-
 
 // Default Jackpot Amount
 jackpot = 5000;
@@ -114,7 +117,7 @@ spinResult = 0;
 // Player Credit Function
 function calcPlayerCredit()
 {
-
+    playerCredit = playerCredit - playerBet;
 }
 
 
@@ -172,8 +175,8 @@ function spinButtonClicked(event: createjs.MouseEvent)
         alert("You don't have enough credit to place that bet");
     }
     else if (playerBet <= playerCredit && playerBet != 0) {
+        calcPlayerCredit();
         Reels();
-        determineWinnings();
     }
 
 }
@@ -211,6 +214,18 @@ function resetButtonClicked(event: createjs.MouseEvent) {
     resetAll();
 }
 
+// Resets Reel C ounter
+function resetCounts() {
+    bells = 0;
+    cheeses = 0;
+    cherries = 0;
+    blueberries = 0;
+    lemons = 0;
+    oranges = 0;
+    sevens = 0;
+    blanks = 0;
+}
+
 /* Utility function to check if a value falls within a range of bounds */
 function checkRange(value, lowerBounds, upperBounds) {
     if (value >= lowerBounds && value <= upperBounds) {
@@ -224,9 +239,7 @@ function checkRange(value, lowerBounds, upperBounds) {
 /* When this function is called it determines the betLine results.
 e.g. Bar - Orange - Banana */
 function Reels() {
-    betLine = [" ", " ", " "];
     var outCome = [0, 0, 0];
-
     for (var spin = 0; spin < 3; spin++) {
         outCome[spin] = Math.floor((Math.random() * 65) + 1);
         switch (outCome[spin]) {
@@ -264,8 +277,9 @@ function Reels() {
                 break;
         }
     }
+    determineWinnings();
+    resetCounts();    
     main();
-    return betLine;
 }
 
 /* This function calculates the player's winnings, if any */
@@ -291,6 +305,9 @@ function determineWinnings() {
         }
         else if (cheeses == 3) {
             spinResult = playerBet * 100;
+            alert("Congratulations! JACKPOT!");
+            playerCredit += jackpot;
+            jackpot = 5000;            
         }
         else if (lemons == 2) {
             spinResult = playerBet * 2;
@@ -324,9 +341,8 @@ function determineWinnings() {
     else
     {
         // If there is even one blank on any reel
-        spinResult == 0; // set the spin result to 0 
-        jackpot += playerBet; // Add what player bet to the jackpot pool
-        
+        spinResult = 0; // set the spin result to 0 
+        jackpot += 1; // Add what player bet to the jackpot pool        
     }
 
 }
@@ -377,27 +393,27 @@ function main()
     betOneButton.on("click", betOneButtonClicked, this);
 
     // Add playerCredits Label
-    playerCreditsLabel = new objects.Label(playerCredit, 98, 309, false);
+    playerCreditsLabel = new objects.Label(playerCredit, 98, 311, false);
     playerCreditsLabel.color = "RED";
     playerCreditsLabel.textAlign = "right";
     stage.addChild(playerCreditsLabel);
 
     // Add playerBet Label
-    playerBetLabel = new objects.Label(playerBet, 195, 309, false);
+    playerBetLabel = new objects.Label(playerBet, 195, 311, false);
     playerBetLabel.color = "RED";
     playerBetLabel.textAlign = "right";
     stage.addChild(playerBetLabel);
 
     // Add spinResult Label
-    spinResultLabel = new objects.Label(spinResult, 292, 309, false);
+    spinResultLabel = new objects.Label(spinResult, 292, 311, false);
     spinResultLabel.color = "RED";
     spinResultLabel.textAlign = "right";
     stage.addChild(spinResultLabel);
 
-    // Add jackpot Label
-    jackpotLabel = new objects.Label(jackpot, 200, 70, false);
-    jackpotLabel.color = "RED";
-    jackpotLabel.textAlign = "right";
+    // Add total Jackpot amount Label
+    jackpotLabel = new createjs.Text(jackpot, "bold 32px digital-7", "RED");
+    jackpotLabel.x = 150;
+    jackpotLabel.y = 64;
     stage.addChild(jackpotLabel);
 
     // Add reel1Sprite Bitmap
