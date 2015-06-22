@@ -1,5 +1,4 @@
-﻿/// <reference path="typings/stats/stats.d.ts" />
-/// <reference path="typings/easeljs/easeljs.d.ts" />
+﻿/// <reference path="typings/easeljs/easeljs.d.ts" />
 /// <reference path="typings/tweenjs/tweenjs.d.ts" />
 /// <reference path="typings/soundjs/soundjs.d.ts" />
 /// <reference path="typings/preloadjs/preloadjs.d.ts" />
@@ -11,12 +10,12 @@
 
 // Game Framework Variables
 var canvas = document.getElementById("canvas");
+// Removing border from canvas and aligning it to the very top left of the browser
 canvas.style.position = "absolute";
 canvas.style.left = "0px";
 canvas.style.top = "0px";
 canvas.style.border = "none";
 var stage: createjs.Stage;
-var stats: Stats;
 
 var assets: createjs.LoadQueue;
 var manifest = [
@@ -137,9 +136,6 @@ function preload() {
     // Load Spitesheet object refers to all the properties of my slotMachineAtlas
     spriteSheet = new createjs.SpriteSheet(slotMachineAtlas);
 
-    //Setup statistics object
-    setupStats();    
-       
 }
 
 // Callback function that initializes game objects
@@ -153,19 +149,6 @@ function init() {
     
     // calling main game function
     main();
-}
-
-// function to setup stat counting
-function setupStats() {
-    stats = new Stats();
-    stats.setMode(0); // set to fps
-
-    // align bottom-right
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '330px';
-    stats.domElement.style.top = '10px';
-
-    document.body.appendChild(stats.domElement);
 }
 
 
@@ -366,11 +349,7 @@ function determineWinnings() {
 }
 // Callback function that creates our Main Game Loop - refreshed 60 fps
 function gameLoop() {
-    stats.begin(); // Begin measuring
-
     stage.update();
-
-    stats.end(); // end measuring
 }
 
 // Our Main Game Function

@@ -1,10 +1,6 @@
 ﻿body {
 }
 
-canvas {
-    border: dashed 1px black;    
-}
-
 @font-face{
     font-family: digital-7;
     src:url(../assets/fonts/digital-7.ttf)format('truetype');
