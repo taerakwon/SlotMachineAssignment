@@ -6,6 +6,7 @@ var __extends = this.__extends || function (d, b) {
 };
 var objects;
 (function (objects) {
+    // Label class for labels in the game
     var Label = (function (_super) {
         __extends(Label, _super);
         function Label(labelText, x, y, centered) {

@@ -1,4 +1,6 @@
 ﻿module objects {
+
+    // Label class for labels in the game
     export class Label extends createjs.Text {
         constructor(labelText:string, x:number, y:number, centered:boolean) {
             super(labelText, config.FONT_SMALL + " " + config.FONT_FAMILY, config.BLACK);

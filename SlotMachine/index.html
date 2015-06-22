@@ -1,35 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <!-- Author: Taera Kwon -->
-<!-- App: Slot Machine -->
-<!-- Date: June 13, 2015 -->
-<!-- Description: Slot Machine Game -->
+<!-- App: Cheese Slot Machine -->
+<!-- Last Modified By: Taera Kwon -->
+<!-- Last Modified Date: June 22, 2015 -->
+<!-- Description: Cheese Slot Machine Game is designed under 320x480 resolution (common mobile screen size).
+                  Player are given 1000 credits to begin with.  Player can either bet 1, 10, or all credits.
+                  Player wins Jackpot when he/she gets 3 Cheeses -->
+<!-- Revision History: -->
+<!-- Github Repository Address: https://github.com/taerakwon/SlotMachineAssignment -->
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slot Machine Game - DEV by Taera Kwon for COMP397</title>
-
     <!-- CSS Section -->
     <link href="css/main.css" rel="stylesheet" />
-
 </head>
 <body onload="preload();">
     <!-- Game Container -->
     <!-- 320x480 Size Suitable for Common Mobile Phones -->
     <canvas id="canvas" width="320" height="480"></canvas>
-
     <!-- JavaScript Section -->
     <script src="Scripts/lib/Stats.js"></script>
     <script src="Scripts/lib/easeljs-0.8.0.min.js"></script>
     <script src="Scripts/lib/tweenjs-0.6.0.min.js"></script>
     <script src="Scripts/lib/soundjs-0.6.0.min.js"></script>
     <script src="Scripts/lib/preloadjs-0.6.0.min.js"></script>
-
     <!-- Game Scripts -->
     <script src="config/constants.js"></script>
     <script src="objects/label.js"></script>
     <script src="objects/button.js"></script>
     <script src="Scripts/game.js"></script>
-
 </body>
 </html>

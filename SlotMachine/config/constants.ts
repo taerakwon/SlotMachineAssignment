@@ -4,7 +4,7 @@
     export var FONT_SMALL: string = "20px";
     export var FONT_MEDIUM: string = "40px";
     export var FONT_LARGE: string = "60px";
-    export var FONT_FAMILY: string = "digital-7";
+    export var FONT_FAMILY: string = "digital-7"; // Uses custom font "digital-7"
 
     // COLOUR CONSTANTS
     export var BLACK: string = "#000000";

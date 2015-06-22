@@ -173,12 +173,15 @@ function setupStats() {
 function spinButtonClicked(event: createjs.MouseEvent)
 {
     createjs.Sound.play("buttonClick");
+    // When player has 0 credit remaining
     if (playerCredit == 0) {
         if (confirm("You don't have any more credit!\nReplay?"));
         {
             resetAll();
         }
     }
+
+    // Condition that checks whether player has enough credit to bet the amount he/she wishes to bet
     else if (playerBet > playerCredit) {
         alert("You don't have enough credit to place that bet");
     }
@@ -190,8 +193,7 @@ function spinButtonClicked(event: createjs.MouseEvent)
 }
 
 
-// Reset Function
-
+// Reset Function that resets the game to default
 function resetAll() {
     betLine = ["blank.png", "blank.png", "blank.png"];
     jackpot = 5000;
@@ -200,7 +202,7 @@ function resetAll() {
     main();
 }
 
-// Click Event for Bet One Button
+// Click event function for Bet One button
 function betOneButtonClicked(event: createjs.MouseEvent)
 {
     createjs.Sound.play("buttonClick");
@@ -208,27 +210,27 @@ function betOneButtonClicked(event: createjs.MouseEvent)
     main();
 }
 
-// Click Event for Bet Ten Button
+// Click event function for Bet Ten button
 function betTenButtonClicked(event: createjs.MouseEvent) {
     createjs.Sound.play("buttonClick");
     playerBet = 10;
     main();
 }
 
-// Click Event for Bet Max Button
+// Click event function for Bet Max button
 function betMaxButtonClicked(event: createjs.MouseEvent) {
     createjs.Sound.play("buttonClick");
     playerBet = playerCredit;
     main();
 }
 
-// Click Event for Reset Button
+// Click event function for Reset button
 function resetButtonClicked(event: createjs.MouseEvent) {
     createjs.Sound.play("buttonClick");
     resetAll();
 }
 
-// Resets Reel C ounter
+// Function to reset items in reel
 function resetCounts() {
     bells = 0;
     cheeses = 0;
@@ -317,6 +319,8 @@ function determineWinnings() {
         else if (sevens == 3) {
             spinResult = playerBet * 75;
         }
+
+        // JACKPOT if there are three cheeses
         else if (cheeses == 3) {
             spinResult = playerBet * 100;
             alert("Congratulations! JACKPOT!");
@@ -356,7 +360,7 @@ function determineWinnings() {
     {
         // If there is even one blank on any reel
         spinResult = 0; // set the spin result to 0 
-        jackpot += 1; // Add what player bet to the jackpot pool        
+        jackpot += 1; // Add $1 to the jackpot pool whenever player loses
     }
 
 }
@@ -367,11 +371,6 @@ function gameLoop() {
     stage.update();
 
     stats.end(); // end measuring
-}
-
-// Callback function that allows me to respond to button click events
-function pinkButtonClicked(event: createjs.MouseEvent) {
-    createjs.Sound.play("clicked");
 }
 
 // Our Main Game Function
