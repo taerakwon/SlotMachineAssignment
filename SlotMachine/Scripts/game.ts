@@ -188,7 +188,7 @@ function spinButtonClicked(event: createjs.MouseEvent)
 
 // Reset Function that resets the game to default
 function resetAll() {
-    betLine = ["blank.png", "blank.png", "blank.png"];
+    betLine = ["blank", "blank", "blank"];
     jackpot = 5000;
     playerBet = 0;
     playerCredit = 1000;
