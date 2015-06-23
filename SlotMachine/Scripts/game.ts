@@ -178,10 +178,14 @@ function spinButtonClicked(event: createjs.MouseEvent)
     else if (playerBet > playerCredit) {
         alert("You don't have enough credit to place that bet");
     }
+    else if (playerBet == 0) {
+        alert("Please select your bet");
+    }
     else if (playerBet <= playerCredit && playerBet != 0) {
         calcPlayerCredit();
         Reels();
     }
+    
 
 }
 
