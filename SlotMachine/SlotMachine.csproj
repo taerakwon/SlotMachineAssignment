@@ -61,9 +61,9 @@
   <ItemGroup>
     <Content Include="assets\audio\buttonClick.wav" />
     <Content Include="assets\audio\jackpot.wav" />
+    <Content Include="assets\images\endgame.png" />
     <Content Include="assets\images\slotMachineAtlas.png" />
     <Content Include="assets\images\slotmachinebg.png" />
-    <Content Include="assets\images\spinbutton.png" />
     <Content Include="config\constants.js" />
     <Content Include="objects\button.js" />
     <Content Include="objects\label.js" />

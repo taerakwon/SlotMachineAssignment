@@ -155,9 +155,11 @@ function init() {
     main();
 }
 
-// Click Event for End Game Button
-function endGameClicked(event: createjs.MouseEvent) {
-    this.close();
+// Click Event for endgame Button
+// This function closes the window after prompting thank you alert
+function endGameClicked(event) {
+    alert("Thank you for playing");
+    close();
 }
 
 // Click Event for Spin Button
@@ -430,12 +432,16 @@ function main()
     reel3Sprite = new objects.Button(betLine[2], 206, 174, false);
     stage.addChild(reel3Sprite);
 
-    // Add end gam Bitmap Button
+    // Add endgame Bitmap Button
     endgame = new createjs.Bitmap(assets.getResult("endgame"));
     endgame.x = 96;
     endgame.y = 417;
     stage.addChild(endgame);
-    endgame.on("cilck", endGameClicked, this);
+
+    // endgame Button MouseEvents to change the opacity and close the window
+    endgame.addEventListener("mouseover", function (event) { endgame.alpha = 0.8; });
+    endgame.addEventListener("mouseout", function (event) { endgame.alpha = 1; });
+    endgame.addEventListener("click", endGameClicked);
 
 }
 
