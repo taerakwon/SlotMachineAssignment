@@ -19,16 +19,17 @@ var stage: createjs.Stage;
 
 var assets: createjs.LoadQueue;
 var manifest = [
-    { id: "background", src: "assets/images/slotmachinebg.png" }
+    { id: "background", src: "assets/images/slotmachinebg.png" },
+    { id: "endgame", src: "assets/images/endgame.png" }
 ];
 
 // Preloading Sound
 createjs.Sound.registerSound({ id: "buttonClick", src: "assets/audio/buttonClick.wav" });
+createjs.Sound.registerSound({ id: "jackpotSound", src: "assets/audio/jackpot.wav" });
 
 // Load slotMachineAtlas
 // slotMachineAtlas has sprite objects in arrays
 var slotMachineAtlas = {
-
     "images": [
         "assets/images/slotMachineAtlas.png"
     ],
@@ -64,7 +65,6 @@ var slotMachineAtlas = {
         "resetbutton": [11],
         "spinbutton": [12]
     }
-
 }
 
 // Slot Machine Background 
@@ -79,6 +79,9 @@ var betMaxButton: objects.Button;
 var betTenButton: objects.Button;
 var betOneButton: objects.Button;
 
+// End Game Bitmap Button
+var endgame: createjs.Bitmap;
+
 // Slot Machine Labels
 var playerCreditsLabel: objects.Label;
 var playerBetLabel: objects.Label;
@@ -86,12 +89,13 @@ var spinResultLabel: objects.Label;
 var jackpotLabel: createjs.Text;
 
 // Reels
-var reel1Sprite: createjs.Bitmap;
-var reel2Sprite: createjs.Bitmap;
-var reel3Sprite: createjs.Bitmap;
+var reel1Sprite: objects.Button;
+var reel2Sprite: objects.Button;
+var reel3Sprite: objects.Button;;
 
 // Game Variables
-var betLine = ["blank.png", "blank.png", "blank.png"];
+//var betLine = ["blank.png", "blank.png", "blank.png"];
+var betLine = ["blank", "blank", "blank"]
 var jackpot;
 var playerCredit;
 var playerBet;
@@ -151,6 +155,10 @@ function init() {
     main();
 }
 
+// Click Event for End Game Button
+function endGameClicked(event: createjs.MouseEvent) {
+    this.close();
+}
 
 // Click Event for Spin Button
 function spinButtonClicked(event: createjs.MouseEvent)
@@ -243,41 +251,41 @@ function Reels() {
         outCome[spin] = Math.floor((Math.random() * 65) + 1);
         switch (outCome[spin]) {
             case checkRange(outCome[spin], 1, 27):  // 41.5% probability
-                betLine[spin] = "blank.png";
+                betLine[spin] = "blank";
                 blanks++;
                 break;
             case checkRange(outCome[spin], 28, 37): // 15.4% probability
-                betLine[spin] = "lemon.png";
+                betLine[spin] = "lemon";
                 lemons++;
                 break;
             case checkRange(outCome[spin], 38, 46): // 13.8% probability
-                betLine[spin] = "berry.png";
+                betLine[spin] = "berry";
                 blueberries++;
                 break;
             case checkRange(outCome[spin], 47, 54): // 12.3% probability
-                betLine[spin] = "orange.png";
+                betLine[spin] = "orange";
                 oranges++;
                 break;
             case checkRange(outCome[spin], 55, 59): //  7.7% probability
-                betLine[spin] = "cherry.png";
+                betLine[spin] = "cherry";
                 cherries++;
                 break;
             case checkRange(outCome[spin], 60, 62): //  4.6% probability
-                betLine[spin] = "bell.png";
+                betLine[spin] = "bell";
                 bells++;
                 break;
             case checkRange(outCome[spin], 63, 64): //  3.1% probability
-                betLine[spin] = "seven.png";
+                betLine[spin] = "seven";
                 sevens++;
                 break;
             case checkRange(outCome[spin], 65, 65): //  1.5% probability
-                betLine[spin] = "cheese.png";
+                betLine[spin] = "cheese";
                 cheeses++;
                 break;
         }
     }
     determineWinnings();
-    resetCounts();    
+    resetCounts();   
     main();
 }
 
@@ -305,10 +313,11 @@ function determineWinnings() {
 
         // JACKPOT if there are three cheeses
         else if (cheeses == 3) {
-            spinResult = playerBet * 100;
-            alert("Congratulations! JACKPOT!");
+            spinResult = playerBet * 100;  
+            createjs.Sound.play("jackpotSound"); // Plays sound when player hits JACKPOT     
+            alert("Congratulations! JACKPOT!");            
             playerCredit += jackpot;
-            jackpot = 5000;            
+            jackpot = 5000;         
         }
         else if (lemons == 2) {
             spinResult = playerBet * 2;
@@ -404,26 +413,29 @@ function main()
 
     // Add total Jackpot amount Label
     jackpotLabel = new createjs.Text(jackpot, "bold 32px digital-7", "RED");
-    jackpotLabel.x = 150;
-    jackpotLabel.y = 64;
+    jackpotLabel.x = 140;
+    jackpotLabel.y = 67;
     stage.addChild(jackpotLabel);
 
-    // Add reel1Sprite Bitmap
-    reel1Sprite = new createjs.Bitmap("assets/images/"+betLine[0]);
-    reel1Sprite.x = 54;
-    reel1Sprite.y = 174;
+    // Add reel1Sprite as Button Object
+
+    reel1Sprite = new objects.Button(betLine[0], 54, 174, false);
     stage.addChild(reel1Sprite);
 
-    // Add reel2Sprite Bitmap
-    reel2Sprite = new createjs.Bitmap("assets/images/"+betLine[1]);
-    reel2Sprite.x = 130;
-    reel2Sprite.y = 174;
+    // Add reel2Sprite as Button Object
+    reel2Sprite = new objects.Button(betLine[1], 130, 174, false);
     stage.addChild(reel2Sprite);
 
-    // Add reel3Sprite Bitmap
-    reel3Sprite = new createjs.Bitmap("assets/images/"+betLine[2]);
-    reel3Sprite.x = 206;
-    reel3Sprite.y = 174;
-    stage.addChild(reel3Sprite);    
+    // Add reel3Sprite as Button Object
+    reel3Sprite = new objects.Button(betLine[2], 206, 174, false);
+    stage.addChild(reel3Sprite);
+
+    // Add end gam Bitmap Button
+    endgame = new createjs.Bitmap(assets.getResult("endgame"));
+    endgame.x = 96;
+    endgame.y = 417;
+    stage.addChild(endgame);
+    endgame.on("cilck", endGameClicked, this);
+
 }
 

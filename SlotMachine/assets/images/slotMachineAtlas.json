@@ -1,39 +1,44 @@
 {
 
-    "images": [
-        "slotMachineAtlas.png"
-    ],
+"images": [
+    "slotMachineAtlas.png"
+],
 
-    "frames": [
-        [ 2, 2, 63, 63, 0, 0, 0 ],
-        [ 2, 67, 63, 63, 0, 0, 0 ],
-        [ 2, 132, 63, 63, 0, 0, 0 ],
-        [ 67, 2, 63, 63, 0, 0, 0 ],
-        [ 132, 2, 63, 63, 0, 0, 0 ],
-        [ 197, 2, 49, 49, 0, 0, 0 ],
-        [ 197, 53, 49, 49, 0, 0, 0 ],
-        [ 67, 67, 63, 63, 0, 0, 0 ],
-        [ 132, 67, 63, 63, 0, 0, 0 ],
-        [ 197, 104, 49, 49, 0, 0, 0 ],
-        [ 67, 132, 63, 63, 0, 0, 0 ],
-        [ 132, 132, 49, 49, 0, 0, 0 ],
-        [ 183, 155, 49, 49, 0, 0, 0 ]
-    ],
+"frames": [
+    [2, 2, 63, 63, 0, 0, 0],
+    [2, 67, 63, 63, 0, 0, 0],
+    [2, 132, 63, 63, 0, 0, 0],
+    [67, 2, 63, 63, 0, 0, 0],
+    [132, 2, 63, 63, 0, 0, 0],
+    [197, 2, 49, 49, 0, 0, 0],
+    [197, 53, 49, 49, 0, 0, 0],
+    [67, 67, 63, 63, 0, 0, 0],
+    [132, 67, 63, 63, 0, 0, 0],
+    [197, 104, 49, 49, 0, 0, 0],
+    [67, 132, 63, 63, 0, 0, 0],
+    [132, 132, 49, 49, 0, 0, 0],
+    [183, 155, 49, 49, 0, 0, 0]
+],
 
-    "animations": {
-        "bell": [ 0 ],
-        "berry": [ 1 ],
-        "blank": [ 2 ],
-        "cheese": [ 3 ],
-        "cherry": [ 4 ],
-        "betmaxbutton": [ 5 ],
-        "betonebutton": [ 6 ],
-        "lemon": [ 7 ],
-        "orange": [ 8 ],
-        "bettenbutton": [ 9 ],
-        "seven": [ 10 ],
-        "resetbutton": [ 11 ],
-        "spinbutton": [ 12 ]
-    }
+"animations": {
+    "bell": [0],
+    "berry": [1],
+    "blank": [2],
+    "cheese": [3],
+    "cherry": [4],
+    "betmaxbutton": [5],
+    "betonebutton": [6],
+    "lemon": [7],
+    "orange": [8],
+    "bettenbutton": [9],
+    "seven": [10],
+    "resetbutton": [11],
+    "spinbutton": [12]
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:7a58f7c100f647e300fdbacb5c347199:beab0abfe060a0434dacc997cf6f2a33:8140d1103c24a9847605535c165a8f21$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
 
 }
